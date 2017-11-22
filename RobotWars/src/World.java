@@ -1,37 +1,28 @@
 public class World {
 
-    private Robot robot1;
-    private Robot robot2;
+    private Robot[] robots;
 
     public World() {
     }
 
-    public World(Robot robot1, Robot robot2) {
-        this.robot1 = robot1;
-        this.robot2 = robot2;
+    public World(Robot[] r) {
+        this.robots = r;
     }
 
-    public Robot getRobot1() {
-        return robot1;
+    public void setRobots(Robot[] robots) {
+        this.robots = robots;
     }
 
-    public void setRobot1(Robot robot1) {
-        this.robot1 = robot1;
+    public Robot getRobotByIndex(int i) {
+        return robots[i];
     }
 
-    public Robot getRobot2() {
-        return robot2;
-    }
 
-    public void setRobot2(Robot robot2) {
-        this.robot2 = robot2;
-    }
-
-    public Robot theOtherRobot(Robot me) {
-        if (me == robot1) {
-            return robot2;
-        } else {
-            return robot1;
-        }
-    }
+    //    public Robot theOtherRobot(Robot me) {
+//        if (me == robot1) {
+//            return robot2;
+//        } else {
+//            return robot1;
+//        }
+//    }
 }

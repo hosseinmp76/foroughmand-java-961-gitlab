@@ -22,4 +22,9 @@ public class Wheel {
         }
         return robotCurrentLocation.moveInDirection(direction);
     }
+
+    public String toString() {
+        return "h=" + health;
+    }
+
 }

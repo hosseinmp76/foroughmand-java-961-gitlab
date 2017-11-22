@@ -41,11 +41,15 @@ public class Point {
     }
 
 
-
-
-
-
-
-
-
+    public double distance(Point b) {
+        return Math.sqrt((x - b.getX())*(x - b.getX()) +
+                (y - b.getY())*(y - b.getY()));
+    }
 }
+
+
+
+
+
+
+

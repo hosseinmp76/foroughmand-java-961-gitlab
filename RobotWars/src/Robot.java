@@ -8,6 +8,9 @@ public class Robot {
     private Gun gun;
     private World world;
 
+    public static final String UP_ACTION = "u";
+    public static final int SHOOT_DISTANCE = 100;
+
     public Robot(World world, Point location, String name, Wheel wheel,
                  Gun gun) {
         this.world = world;
@@ -35,7 +38,7 @@ public class Robot {
 
     public void printStatus() {
         System.out.println("Name: " + name +
-                " @" + location.toString());
+                " @" + location.toString() + " gun: " +gun.toString() + " wheel: " + wheel.toString());
     }
 
     public void move(Vector direction) {
@@ -43,6 +46,10 @@ public class Robot {
 //                location.getY() + direction.getY());
 //
         location = wheel.moveRobot(location, direction);
+    }
+
+    public Gun getGun() {
+        return gun;
     }
 
     public Wheel getWheel() {
@@ -54,11 +61,12 @@ public class Robot {
     }
 
     public void readAndDoAction(Scanner scanner) {
+
         String action = scanner.next();
-        if (action.equals("u") || action.equals("d") ||
+        if (action.equals(UP_ACTION) || action.equals("d") ||
                 action.equals("l") || action.equals("r")) {
             int length = scanner.nextInt();
-            if (action.equals("u")) {
+            if (action.equals(UP_ACTION)) {
                 move(new Vector(0, length));
             } else if (action.equals("d")) {
                 move(new Vector(0, -length));
@@ -68,15 +76,23 @@ public class Robot {
                 move(new Vector(-length, 0));
             }
         } else {
+            int otherRobotIndex = scanner.nextInt();
+            Robot otherRobot = world.getRobotByIndex(otherRobotIndex);
             if (action.equals("sw")) {
-                Robot otherRobot = world.theOtherRobot(this);
                 Wheel otherRobotsWheel = otherRobot.getWheel();
-                gun.shootToWheel(otherRobotsWheel);
+                if (location.distance(otherRobot.getLocation()) < SHOOT_DISTANCE) {
+                    gun.shootToWheel(otherRobotsWheel);
+                }
             } else if (action.equals("sg")) {
-                Robot otherRobot = world.theOtherRobot(this);
                 Gun otherRobotsGun = otherRobot.getGun();
-                gun.shootToGun(otherRobotsGun);
+                if (location.distance(otherRobot.getLocation()) < SHOOT_DISTANCE) {
+                    gun.shootToGun(otherRobotsGun);
+                }
             }
         }
+    }
+
+    public boolean isDead() {
+        return wheel.getHealth() == 0;
     }
 }

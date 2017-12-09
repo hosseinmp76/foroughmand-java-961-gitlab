@@ -50,6 +50,8 @@ public class World {
                 Animal a = get(x, y);
                 if (a != null) {
                     System.out.print(a.toString());
+                } else {
+                    System.out.print(" ");
                 }
             }
             System.out.println();
